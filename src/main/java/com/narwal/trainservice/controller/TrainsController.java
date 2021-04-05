@@ -44,9 +44,10 @@ public class TrainsController {
         return train.orElseGet(Train::new);
     }
 
-    @GetMapping("search/")
-    public List<Train> searchTrains(){
-        return trainsService.getAllTrains();
+    @GetMapping("search/{fromStationCode}/{toStationCode}")
+    public List<Train> searchTrains(@PathVariable String fromStationCode, @PathVariable String toStationCode){
+        System.out.println(fromStationCode + " " + toStationCode);
+        return trainsService.searchTrainsByFromStationCodeAndToStationCode(fromStationCode, toStationCode);
     }
 
 }

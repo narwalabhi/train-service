@@ -34,7 +34,7 @@ public class TrainsService {
         return trainsRepo.findByNumber(number);
     }
 
-    public List<Train> getAllTrains() {
-        return trainsRepo.findAll();
+    public List<Train> searchTrainsByFromStationCodeAndToStationCode(String fromStationCode, String toStationCode) {
+        return trainsRepo.findTrainByFromStationCodeAndToStationCode(fromStationCode, toStationCode);
     }
 }
