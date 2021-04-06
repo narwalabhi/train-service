@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TripSchedulesRepo extends MongoRepository<TripSchedule, String> {
 
+    public void deleteByTripId(String tripId);
 
+    public TripSchedule findByTripId(String tipID);
 
 }

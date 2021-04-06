@@ -3,10 +3,7 @@ package com.narwal.trainservice.controller;
 import com.narwal.trainservice.model.TripSchedule;
 import com.narwal.trainservice.service.TripSchedulesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("trip-schedules/")
@@ -18,6 +15,21 @@ public class TripsSchedulesController {
     @PostMapping("/add")
     public TripSchedule createTripSchedule(@RequestBody TripSchedule tripSchedule){
         return tripSchedulesService.createTripSchedule(tripSchedule);
+    }
+
+    @PutMapping("/update/{tripId}")
+    public TripSchedule updateTripSchedule(@PathVariable String tripId, @RequestBody TripSchedule tripSchedule){
+        return tripSchedulesService.updateTripSchedule(tripId, tripSchedule);
+    }
+
+    @DeleteMapping("/delete/{tripScheduleId}")
+    public void deleteTripSchedule(@PathVariable String tripScheduleId){
+        tripSchedulesService.deleteTripSchedule(tripScheduleId);
+    }
+
+    @GetMapping("/get/{tripScheduleId}")
+    public TripSchedule getTripSchedule(@PathVariable String tripScheduleId){
+        return tripSchedulesService.getTripSchedule(tripScheduleId);
     }
 
 }
