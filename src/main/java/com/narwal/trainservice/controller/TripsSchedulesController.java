@@ -32,4 +32,9 @@ public class TripsSchedulesController {
         return tripSchedulesService.getTripSchedule(tripScheduleId);
     }
 
+    @GetMapping("/get-trip-by-id/{tripId}")
+    public TripSchedule getTripScheduleByTripId(@PathVariable String tripId){
+        return tripSchedulesService.getTripScheduleByTripId(tripId);
+    }
+
 }

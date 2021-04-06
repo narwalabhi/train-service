@@ -30,7 +30,11 @@ public class TripSchedulesService {
         tripSchedulesRepo.deleteByTripId(tripId);
     }
 
-    public TripSchedule getTripSchedule(String tripId){
+    public TripSchedule getTripSchedule(String tripScheduleId){
+        Optional<TripSchedule> tripSchedule = tripSchedulesRepo.findById(tripScheduleId);
+        return tripSchedule.orElse(null);
+    }
+    public TripSchedule getTripScheduleByTripId(String tripId){
         return tripSchedulesRepo.findByTripId(tripId);
     }
 

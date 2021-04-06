@@ -37,6 +37,7 @@ public class TripsController {
         if(trip.isPresent()){
             return tripsService.getTrip(tripId);
         }
+        System.out.println(trip.get());
         return Optional.empty();
     }
 
