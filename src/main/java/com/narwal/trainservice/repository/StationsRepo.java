@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StationsRepo extends MongoRepository<Station, String> {
 
+    public void deleteByCode(String stationCode);
+
 }

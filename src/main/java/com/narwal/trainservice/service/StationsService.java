@@ -15,4 +15,8 @@ public class StationsService {
         return stationsRepo.save(station);
     }
 
+    public void deleteStation(String stationCode){
+        stationsRepo.deleteByCode(stationCode);
+    }
+
 }
