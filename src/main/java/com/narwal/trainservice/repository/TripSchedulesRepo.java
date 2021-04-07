@@ -1,5 +1,6 @@
 package com.narwal.trainservice.repository;
 
+import com.narwal.trainservice.model.Trip;
 import com.narwal.trainservice.model.TripSchedule;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +15,6 @@ public interface TripSchedulesRepo extends MongoRepository<TripSchedule, String>
     public TripSchedule findByTripId(String tipID);
 
     public Optional<TripSchedule> findById(String tipScheduleID);
+
+    public TripSchedule findByTripIdAndTripDate(String tripId, String date);
 }

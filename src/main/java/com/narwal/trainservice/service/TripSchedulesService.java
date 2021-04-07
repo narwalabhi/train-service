@@ -18,9 +18,10 @@ public class TripSchedulesService {
         return tripSchedulesRepo.save(tripSchedule);
     }
 
-    public TripSchedule updateTripSchedule(String tripId, TripSchedule tripSchedule) {
-        Optional<TripSchedule> tripScheduleData = tripSchedulesRepo.findById(tripId);
+    public TripSchedule updateTripSchedule(String tripScheduleID, TripSchedule tripSchedule) {
+        Optional<TripSchedule> tripScheduleData = tripSchedulesRepo.findById(tripScheduleID);
         if(tripScheduleData.isPresent()){
+            System.out.println("service update " + tripSchedule);
             tripSchedulesRepo.save(tripSchedule);
         }
         return tripSchedule;
@@ -37,5 +38,10 @@ public class TripSchedulesService {
     public TripSchedule getTripScheduleByTripId(String tripId){
         return tripSchedulesRepo.findByTripId(tripId);
     }
+    public TripSchedule getTripScheduleByTripIdAndDate(String tripId, String date){
+        return tripSchedulesRepo.findByTripIdAndTripDate(tripId, date);
+    }
+
+
 
 }

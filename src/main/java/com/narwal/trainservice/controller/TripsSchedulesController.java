@@ -14,12 +14,14 @@ public class TripsSchedulesController {
 
     @PostMapping("/add")
     public TripSchedule createTripSchedule(@RequestBody TripSchedule tripSchedule){
+        System.out.println(tripSchedule);
         return tripSchedulesService.createTripSchedule(tripSchedule);
     }
 
-    @PutMapping("/update/{tripId}")
-    public TripSchedule updateTripSchedule(@PathVariable String tripId, @RequestBody TripSchedule tripSchedule){
-        return tripSchedulesService.updateTripSchedule(tripId, tripSchedule);
+    @PutMapping("/update/{tripScheduleId}")
+    public TripSchedule updateTripSchedule(@PathVariable String tripScheduleId, @RequestBody TripSchedule tripSchedule){
+        System.out.println(tripSchedule);
+        return tripSchedulesService.updateTripSchedule(tripScheduleId, tripSchedule);
     }
 
     @DeleteMapping("/delete/{tripScheduleId}")
@@ -32,9 +34,14 @@ public class TripsSchedulesController {
         return tripSchedulesService.getTripSchedule(tripScheduleId);
     }
 
+    @GetMapping("/get-trip-by-id/{tripId}/{date}")
+    public TripSchedule getTripScheduleByTripId(@PathVariable String tripId, @PathVariable String date){
+        return tripSchedulesService.getTripScheduleByTripIdAndDate(tripId, date);
+    }
+
     @GetMapping("/get-trip-by-id/{tripId}")
     public TripSchedule getTripScheduleByTripId(@PathVariable String tripId){
-        return tripSchedulesService.getTripScheduleByTripId(tripId);
+        return tripSchedulesService.getTripSchedule(tripId);
     }
 
 }

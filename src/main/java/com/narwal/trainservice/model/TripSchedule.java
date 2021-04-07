@@ -27,4 +27,18 @@ public class TripSchedule {
     private int chairCarAcAvailableSeats;
     private int SleeperAvailableSeats;
     private String tripId;
+    @Override
+    public String toString() {
+        return "TripSchedule{" +
+                "id='" + id + '\'' +
+                ", tripDate=" + tripDate +
+                ", firstAcAvailableSeats=" + firstAcAvailableSeats +
+                ", secondAcAvailableSeats=" + secondAcAvailableSeats +
+                ", thirdAcAvailableSeats=" + thirdAcAvailableSeats +
+                ", FirstClassAcAvailableSeats=" + FirstClassAcAvailableSeats +
+                ", chairCarAcAvailableSeats=" + chairCarAcAvailableSeats +
+                ", SleeperAvailableSeats=" + SleeperAvailableSeats +
+                ", tripId='" + tripId + '\'' +
+                '}';
+    }
 }
