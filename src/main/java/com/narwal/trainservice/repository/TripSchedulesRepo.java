@@ -3,18 +3,25 @@ package com.narwal.trainservice.repository;
 import com.narwal.trainservice.model.Trip;
 import com.narwal.trainservice.model.TripSchedule;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Repository
 public interface TripSchedulesRepo extends MongoRepository<TripSchedule, String> {
 
-    public void deleteByTripId(String tripId);
+    void deleteByTripId(String tripId);
 
-    public TripSchedule findByTripId(String tipID);
+    TripSchedule findByTripId(String tipID);
 
-    public Optional<TripSchedule> findById(String tipScheduleID);
+    Optional<TripSchedule> findById(String tipScheduleID);
 
-    public TripSchedule findByTripIdAndTripDate(String tripId, String date);
+    @Query("{$and:[{'tripId': ?0}, {'tripDate': ?1}]}")
+    TripSchedule findByTripIdAndTripDate(String tripId, Date date);
+
+    TripSchedule findTripScheduleByTripIdAndTripDate(String tripId, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)Date date);
+
 }

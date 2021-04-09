@@ -37,4 +37,8 @@ public class TripsService {
     public List<Trip> getAllTrips(){
         return tripsRepo.findAll();
     }
+
+    public List<Trip> getAlTripsBySrcAndDest(String srcStationCode, String destStationCode) {
+        return tripsRepo.findBySourceStationCodeAndDestinationStationCode(srcStationCode, destStationCode);
+    }
 }

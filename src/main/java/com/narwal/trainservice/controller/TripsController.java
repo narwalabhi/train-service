@@ -1,6 +1,7 @@
 package com.narwal.trainservice.controller;
 
 import com.narwal.trainservice.model.Trip;
+import com.narwal.trainservice.model.TripSearchRequestBody;
 import com.narwal.trainservice.service.TripsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,17 +34,23 @@ public class TripsController {
 
     @GetMapping("/get/{tripId}")
     public Optional<Trip> getTrip(@PathVariable String tripId){
+        System.out.println(tripId);
         Optional<Trip> trip = tripsService.getTrip(tripId);
         if(trip.isPresent()){
             return tripsService.getTrip(tripId);
         }
-        System.out.println(trip.get());
         return Optional.empty();
+    }
+
+    @GetMapping("/get-trip-by-src-dest")
+    public List<Trip> getTripsBySrcAndDest(@RequestBody TripSearchRequestBody tripSearchRequestBody){
+        return tripsService.getAlTripsBySrcAndDest(tripSearchRequestBody.getSrcStationCode(), tripSearchRequestBody.getDestStationCode());
     }
 
     @GetMapping("/get")
     public List<Trip> getAllTrips(){
         return tripsService.getAllTrips();
     }
+
 
 }

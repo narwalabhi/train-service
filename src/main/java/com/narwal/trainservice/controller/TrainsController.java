@@ -41,7 +41,7 @@ public class TrainsController {
     @GetMapping("/get/{trainId}")
     public Train getTrain(@PathVariable String trainId){
         Optional<Train> train = trainsService.getTrain(trainId);
-        return train.orElseGet(Train::new);
+        return train.orElse(null);
     }
 
     @GetMapping("search/{fromStationCode}/{toStationCode}")
