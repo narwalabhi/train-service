@@ -11,7 +11,5 @@ public interface StationsRepo extends MongoRepository<Station, String> {
 
     public void deleteByCode(String stationCode);
 
-    public Optional<Station> findByCode(String stationCode, Station station);
-
-    public Station findByCode(String stationCode);
+    public Optional<Station> findByCode(String stationCode);
 }

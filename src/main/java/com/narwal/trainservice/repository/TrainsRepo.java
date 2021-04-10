@@ -12,7 +12,7 @@ public interface TrainsRepo extends MongoRepository<Train, String> {
 
     public Optional<Train> findByNumber(String number);
 
-    public void deleteByNumber(String number);
+    public void deleteById(String trainId);
 
     public List<Train> findTrainByFromStationCodeAndToStationCode(String fromStationCode, String toStationCode);
 }

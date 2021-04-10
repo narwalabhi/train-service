@@ -1,17 +1,16 @@
 package com.narwal.trainservice.controller;
 
-import com.narwal.trainservice.model.Trip;
+import com.narwal.trainservice.exception.ApiRequestException;
+import com.narwal.trainservice.exception.EntityNotFoundException;
 import com.narwal.trainservice.model.TripSchedule;
 import com.narwal.trainservice.service.TripSchedulesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.ws.rs.PUT;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -32,49 +31,61 @@ public class TripsSchedulesController {
     RestTemplate restTemplate;
 
     @PostMapping("/add")
-    public TripSchedule createTripSchedule(@RequestBody TripSchedule tripSchedule){
+    public ResponseEntity<TripSchedule> createTripSchedule(@RequestBody TripSchedule tripSchedule) {
         System.out.println(tripSchedule);
         tripSchedule.setStatus(activeCode);
-        return tripSchedulesService.createTripSchedule(tripSchedule);
+        Optional<TripSchedule> tripScheduleData = tripSchedulesService.createTripSchedule(tripSchedule);
+        if (tripScheduleData.isPresent()) {
+            return ResponseEntity.ok(tripScheduleData.get());
+        } else throw new ApiRequestException("Bad JSON");
     }
 
     @PutMapping("/update/{tripScheduleId}")
-    public TripSchedule updateTripSchedule(@PathVariable String tripScheduleId, @RequestBody TripSchedule tripSchedule){
+    public ResponseEntity<TripSchedule> updateTripSchedule(@PathVariable String tripScheduleId, @RequestBody TripSchedule tripSchedule) {
         System.out.println(tripSchedule);
-        return tripSchedulesService.updateTripSchedule(tripScheduleId, tripSchedule);
+        Optional<TripSchedule> tripScheduleData = tripSchedulesService.updateTripSchedule(tripScheduleId, tripSchedule);
+        if (tripScheduleData.isPresent()) {
+            return ResponseEntity.ok(tripScheduleData.get());
+        } else throw new EntityNotFoundException("TripSchedule with id " + tripScheduleId + " was not found.");
+
     }
 
     @DeleteMapping("/delete/{tripScheduleId}")
-    public void deleteTripSchedule(@PathVariable String tripScheduleId){
-        tripSchedulesService.deleteTripSchedule(tripScheduleId);
+    public ResponseEntity<TripSchedule> deleteTripSchedule(@PathVariable String tripScheduleId) {
+        Optional<TripSchedule> tripSchedule = tripSchedulesService.deleteTripSchedule(tripScheduleId);
+        if (tripSchedule.isPresent()) {
+            return ResponseEntity.ok(tripSchedule.get());
+        } else throw new EntityNotFoundException("TripSchedule with id " + tripScheduleId + " was not found.");
     }
 
     @GetMapping("/get/{tripScheduleId}")
-    public TripSchedule getTripSchedule(@PathVariable String tripScheduleId){
-        return tripSchedulesService.getTripSchedule(tripScheduleId);
+    public ResponseEntity<TripSchedule> getTripSchedule(@PathVariable String tripScheduleId) {
+        Optional<TripSchedule> tripSchedule = tripSchedulesService.getTripSchedule(tripScheduleId);
+        if (tripSchedule.isPresent()){
+            return ResponseEntity.ok(tripSchedule.get());
+        } else throw new EntityNotFoundException("TripSchedule with id " + tripScheduleId + " was not found.");
     }
 
     @GetMapping("/get-trip-by-id/{tripId}/{date}")
-    public TripSchedule getTripScheduleByTripId(@PathVariable String tripId, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE_TIME) Date date) {
-        TripSchedule tripSchedule = tripSchedulesService.getTripScheduleByTripIdAndDate(tripId, date);
-        TripSchedule tripSchedule1 = tripSchedulesService.getTripScheduleByTripIdAndDate2(tripId, date);
+    public ResponseEntity<TripSchedule> getTripScheduleByTripIdAndDate(@PathVariable String tripId, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE_TIME) Date date) {
+        Optional<TripSchedule> tripSchedule = tripSchedulesService.getTripScheduleByTripIdAndDate(tripId, date);
         System.out.println(DateTimeFormat.ISO.TIME);
-        System.out.println("tripId & Date " + date.toString() + " " + tripSchedule + " " + tripSchedule1);
-        if (tripSchedule != null){
-            return tripSchedule;
-        }
-        return null;
+        System.out.println("tripId & Date " + date.toString() + " " + tripSchedule);
+        return tripSchedule.map(ResponseEntity::ok).orElse(null);
     }
 
-    @GetMapping("/get-trip-by-id/{tripId}")
-    public TripSchedule getTripScheduleByTripId(@PathVariable String tripId){
-        return tripSchedulesService.getTripSchedule(tripId);
+    @GetMapping("/get-trip-by-id/{tripScheduleId}")
+    public ResponseEntity<TripSchedule> getTripScheduleByTripId(@PathVariable String tripScheduleId) {
+        Optional<TripSchedule> tripSchedule = tripSchedulesService.getTripSchedule(tripScheduleId);
+        if (tripSchedule.isPresent()){
+            return ResponseEntity.ok(tripSchedule.get());
+        }else throw new EntityNotFoundException("TripSchedule with id " + tripScheduleId + " was not found.");
     }
 
     @PutMapping("/cancel-trip-schedule/{tripScheduleId}")
-    public void cancelTripSchedule(@PathVariable String tripScheduleId){
-        Optional<TripSchedule> tripSchedule = Optional.ofNullable(tripSchedulesService.getTripSchedule(tripScheduleId));
-        if(tripSchedule.isPresent()){
+    public void cancelTripSchedule(@PathVariable String tripScheduleId) {
+        Optional<TripSchedule> tripSchedule = tripSchedulesService.getTripSchedule(tripScheduleId);
+        if (tripSchedule.isPresent()) {
             tripSchedule.get().setStatus(cancelCode);
 //            restTemplate.exchange();
         }

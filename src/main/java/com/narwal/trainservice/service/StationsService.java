@@ -13,24 +13,35 @@ public class StationsService {
     @Autowired
     StationsRepo stationsRepo;
 
-    public Station createStation(Station station){
-        return stationsRepo.save(station);
+    public Optional<Station> createStation(Station station){
+        return Optional.of(stationsRepo.save(station));
     }
 
-    public void deleteStation(String stationCode){
-        stationsRepo.deleteByCode(stationCode);
-    }
-
-    public Station updateStation(String stationCode, Station station) {
-        Optional<Station> stationData = stationsRepo.findByCode(stationCode, station);
-        if(stationData.isPresent()){
-            stationsRepo.save(station);
+    public Optional<Station> deleteStation(String id){
+        Optional<Station> station = stationsRepo.findById(id);
+        if(station.isPresent()){
+            stationsRepo.deleteByCode(id);
+            return station;
         }
-        return station;
+        return Optional.empty();
     }
 
-    public Station getStation(String stationCode){
-        return stationsRepo.findByCode(stationCode);
+    public Optional<Station> updateStation(String id, Station station) {
+        Optional<Station> stationData = stationsRepo.findById(id);
+        if(stationData.isPresent()){
+            station.setId(id);
+            return Optional.of(stationsRepo.save(station));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Station> getStationById(String id){
+        return stationsRepo.findById(id);
+    }
+
+    public Optional<Station> getStationByCode(String stationCode){
+        Optional<Station> station = stationsRepo.findByCode(stationCode);
+        return station;
     }
 
 }

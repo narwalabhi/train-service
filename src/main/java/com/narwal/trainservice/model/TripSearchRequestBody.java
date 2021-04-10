@@ -10,8 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TripSearchRequestBody {
-
     private String srcStationCode;
     private String destStationCode;
-
 }
