@@ -21,6 +21,20 @@ public class Trip {
     private int durationHrs;
     private int durationMns;
     private String sourceStationCode;
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "tripId='" + tripId + '\'' +
+                ", baseFare=" + baseFare +
+                ", durationHrs=" + durationHrs +
+                ", durationMns=" + durationMns +
+                ", sourceStationCode='" + sourceStationCode + '\'' +
+                ", destinationStationCode='" + destinationStationCode + '\'' +
+                ", trainNo='" + trainNo + '\'' +
+                '}';
+    }
+
     private String destinationStationCode;
     private String trainNo;
 }

@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 public class Station {
     @Id
+    private String id;
     @Indexed
     private String code;
     private String name;

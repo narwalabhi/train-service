@@ -18,6 +18,7 @@ import java.util.Date;
 @Setter
 public class Train {
     @Id
+    private String id;
     @Indexed
     private String number;
     private String name;
