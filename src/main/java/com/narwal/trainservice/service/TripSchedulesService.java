@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -45,12 +46,16 @@ public class TripSchedulesService {
         return tripSchedulesRepo.findByTripId(tripId);
     }
 
-    public Optional<TripSchedule> getTripScheduleByTripIdAndDate(String tripId, Date date){
-        return Optional.ofNullable(tripSchedulesRepo.findByTripIdAndTripDate(tripId, date));
+    public Optional<TripSchedule> getTripScheduleByTripIdAndDate(String tripId, LocalDate date){
+        TripSchedule byTripIdAndTripDate = tripSchedulesRepo.findByTripIdAndTripDate(tripId, date);
+        System.out.println("By" + byTripIdAndTripDate);
+        return Optional.ofNullable(byTripIdAndTripDate);
     }
 
-    public TripSchedule getTripScheduleByTripIdAndDate2(String tripId, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date) {
-        return tripSchedulesRepo.findByTripIdAndTripDate(tripId, date);
+    public Optional<TripSchedule> getTripScheduleByTripIdAndDate2(String tripId, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date) {
+        TripSchedule tripScheduleByTripIdAndTripDate = tripSchedulesRepo.findTripScheduleByTripIdAndTripDate(tripId, date);
+        System.out.println("by2" + tripScheduleByTripIdAndTripDate);
+        return Optional.ofNullable(tripScheduleByTripIdAndTripDate);
     }
 
 

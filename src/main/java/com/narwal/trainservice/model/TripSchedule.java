@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Document("trip_schedules")
@@ -20,8 +21,8 @@ public class TripSchedule {
     @Id
     @Indexed
     private String id;
-    @DateTimeFormat(pattern = "yyyy-mm-dd", iso = DateTimeFormat.ISO.DATE_TIME)
-    private Date tripDate;
+    @DateTimeFormat(pattern = "yyyy-mm-dd", iso = DateTimeFormat.ISO.NONE)
+    private LocalDate tripDate;
     private int firstAcAvailableSeats;
     private int secondAcAvailableSeats;
     private int thirdAcAvailableSeats;
