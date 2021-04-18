@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.TimeZone;
 
 @RestController
-@RequestMapping("trip-schedules/")
+@RequestMapping("/train/trip-schedules/")
 public class TripsSchedulesController {
 
     @Value("${codes.trip-schedule-active}")

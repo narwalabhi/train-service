@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/trains")
+@RequestMapping("/train")
 public class TrainsController {
 
     @Autowired
