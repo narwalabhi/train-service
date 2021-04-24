@@ -91,6 +91,7 @@ public class TripsSchedulesController {
         }else throw new EntityNotFoundException("TripSchedule with id " + tripScheduleId + " was not found.");
     }
 
+    
     @PutMapping("/cancel-trip-schedule/{tripScheduleId}")
     public void cancelTripSchedule(@PathVariable String tripScheduleId) {
         Optional<TripSchedule> tripSchedule = tripSchedulesService.getTripSchedule(tripScheduleId);

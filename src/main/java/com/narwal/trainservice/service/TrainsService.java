@@ -48,4 +48,8 @@ public class TrainsService {
     public List<Train> searchTrainsByFromStationCodeAndToStationCode(String fromStationCode, String toStationCode) {
         return trainsRepo.findTrainByFromStationCodeAndToStationCode(fromStationCode, toStationCode);
     }
+
+    public Optional<List<Train>> getAll() {
+        return Optional.ofNullable(trainsRepo.findAll());
+    }
 }

@@ -2,16 +2,11 @@ package com.narwal.trainservice.controller;
 
 import com.narwal.trainservice.exception.ApiRequestException;
 import com.narwal.trainservice.exception.EntityNotFoundException;
-import com.narwal.trainservice.model.Station;
 import com.narwal.trainservice.model.Train;
 import com.narwal.trainservice.service.TrainsService;
-import com.narwal.trainservice.service.TripSchedulesService;
-import com.narwal.trainservice.service.TripsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +62,16 @@ public class TrainsController {
     public List<Train> searchTrains(@PathVariable String fromStationCode, @PathVariable String toStationCode){
         System.out.println(fromStationCode + " " + toStationCode);
         return trainsService.searchTrainsByFromStationCodeAndToStationCode(fromStationCode, toStationCode);
+    }
+
+
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Train>> getAllTrains(){
+        Optional<List<Train>> trains = trainsService.getAll();
+        if (trains.isPresent()){
+            return ResponseEntity.ok(trains.get());
+        }else throw new EntityNotFoundException("Trains not found.");
     }
 
 }
