@@ -31,18 +31,17 @@ public class TripSchedule {
     private int SleeperAvailableSeats;
     private String tripId;
     private String status;
-    @Override
-    public String toString() {
-        return "TripSchedule{" +
-                "id='" + id + '\'' +
-                ", tripDate=" + tripDate +
-                ", firstAcAvailableSeats=" + firstAcAvailableSeats +
-                ", secondAcAvailableSeats=" + secondAcAvailableSeats +
-                ", thirdAcAvailableSeats=" + thirdAcAvailableSeats +
-                ", FirstClassAcAvailableSeats=" + FirstClassAcAvailableSeats +
-                ", chairCarAcAvailableSeats=" + chairCarAcAvailableSeats +
-                ", SleeperAvailableSeats=" + SleeperAvailableSeats +
-                ", tripId='" + tripId + '\'' +
-                '}';
+
+
+    public TripSchedule(LocalDate tripDate, int firstAcAvailableSeats, int secondAcAvailableSeats, int thirdAcAvailableSeats, int firstClassAcAvailableSeats, int chairCarAcAvailableSeats, int sleeperAvailableSeats, String tripId, String status) {
+        this.tripDate = tripDate;
+        this.firstAcAvailableSeats = firstAcAvailableSeats;
+        this.secondAcAvailableSeats = secondAcAvailableSeats;
+        this.thirdAcAvailableSeats = thirdAcAvailableSeats;
+        FirstClassAcAvailableSeats = firstClassAcAvailableSeats;
+        this.chairCarAcAvailableSeats = chairCarAcAvailableSeats;
+        SleeperAvailableSeats = sleeperAvailableSeats;
+        this.tripId = tripId;
+        this.status = status;
     }
 }

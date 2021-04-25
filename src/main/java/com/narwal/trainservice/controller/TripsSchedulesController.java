@@ -2,8 +2,12 @@ package com.narwal.trainservice.controller;
 
 import com.narwal.trainservice.exception.ApiRequestException;
 import com.narwal.trainservice.exception.EntityNotFoundException;
+import com.narwal.trainservice.model.Train;
+import com.narwal.trainservice.model.Trip;
 import com.narwal.trainservice.model.TripSchedule;
+import com.narwal.trainservice.service.TrainsService;
 import com.narwal.trainservice.service.TripSchedulesService;
+import com.narwal.trainservice.service.TripsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,9 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Optional;
-import java.util.TimeZone;
+import java.util.*;
 
 @RestController
 @RequestMapping("/train/trip-schedules/")
@@ -30,6 +32,12 @@ public class TripsSchedulesController {
 
     @Autowired
     TripSchedulesService tripSchedulesService;
+
+    @Autowired
+    TripsService tripsService;
+
+    @Autowired
+    TrainsService trainsService;
 
     @Autowired
     RestTemplate restTemplate;
@@ -76,10 +84,9 @@ public class TripsSchedulesController {
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 //        date = simpleDateFormat.parse(date.toString());
         Optional<TripSchedule> tripSchedule = tripSchedulesService.getTripScheduleByTripIdAndDate(tripId, date);
-        Optional<TripSchedule> tripSchedule2 = tripSchedulesService.getTripScheduleByTripIdAndDate2(tripId, date);
+//        Optional<TripSchedule> tripSchedule2 = tripSchedulesService.getTripScheduleByTripIdAndDate2(tripId, date);
         System.out.println(DateTimeFormat.ISO.TIME);
         System.out.println("tripId & Date " + date.toString() + " " + tripSchedule);
-        System.out.println("tripId & Date2 " + date.toString() + " " + tripSchedule2);
         return tripSchedule.map(ResponseEntity::ok).orElse(null);
     }
 
@@ -99,6 +106,40 @@ public class TripsSchedulesController {
             tripSchedule.get().setStatus(cancelCode);
 //            restTemplate.exchange();
         }
+    }
+
+    @GetMapping("/get-trip-schedules-by-date-and-stations/{fromCode}/{toCode}/{date}")
+    public ResponseEntity<List<TripSchedule>> getTripSchedulesByStationsAndDate(@PathVariable String fromCode, @PathVariable String toCode, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.NONE) LocalDate date){
+       List<Trip> trips = tripsService.getAlTripsBySrcAndDest(fromCode, toCode);
+        System.out.println(trips);
+        if (trips != null) {
+            List<TripSchedule> existingTripSchedules = new ArrayList<>();
+            for (Trip trip : trips){
+                Optional<TripSchedule> tripSchedule = tripSchedulesService.getTripScheduleByTripIdAndDate(trip.getTripId(), date);
+                if (tripSchedule.isPresent()){
+                    existingTripSchedules.add(tripSchedule.get());
+                }else {
+                    Optional<Train> trainData = trainsService.getTrainByNumber(trip.getTrainNo());
+                    if (trainData.isPresent()){
+                        Train train = trainData.get();
+                        TripSchedule newTripSchedule = new TripSchedule(
+                                date,
+                                train.getFirstAcSeats(),
+                                train.getSecondAcSeats(),
+                                train.getThirdAcSeats(),
+                                train.getFirstClassSeats(),
+                                train.getChairCarSeats(),
+                                train.getSleeperSeats(),
+                                trip.getTripId(),
+                                activeCode);
+                        Optional<TripSchedule> tripScheduleData = tripSchedulesService.createTripSchedule(newTripSchedule);
+                        tripScheduleData.ifPresent(existingTripSchedules::add);
+                    }
+                }
+            }
+            return ResponseEntity.ok(existingTripSchedules);
+        }
+        throw new EntityNotFoundException("No trips available!");
     }
 
 }

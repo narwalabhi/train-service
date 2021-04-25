@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -24,5 +25,6 @@ public interface TripSchedulesRepo extends MongoRepository<TripSchedule, String>
     TripSchedule findByTripIdAndTripDate(String tripId, LocalDate date);
 
     TripSchedule findTripScheduleByTripIdAndTripDate(String tripId, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date);
+
 
 }

@@ -1,13 +1,16 @@
 package com.narwal.trainservice.service;
 
+import com.narwal.trainservice.model.Trip;
 import com.narwal.trainservice.model.TripSchedule;
 import com.narwal.trainservice.repository.TripSchedulesRepo;
+import com.narwal.trainservice.repository.TripsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +18,10 @@ public class TripSchedulesService {
 
     @Autowired
     TripSchedulesRepo tripSchedulesRepo;
+
+    @Autowired
+    TripsService tripsService;
+
 
     public Optional<TripSchedule> createTripSchedule(TripSchedule tripSchedule){
         return Optional.of(tripSchedulesRepo.save(tripSchedule));
@@ -57,7 +64,5 @@ public class TripSchedulesService {
         System.out.println("by2" + tripScheduleByTripIdAndTripDate);
         return Optional.ofNullable(tripScheduleByTripIdAndTripDate);
     }
-
-
 
 }
