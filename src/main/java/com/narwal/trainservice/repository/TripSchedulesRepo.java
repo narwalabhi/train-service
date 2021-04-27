@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface TripSchedulesRepo extends MongoRepository<TripSchedule, String> {
 
-    void deleteByTripId(String tripId);
+    void deleteById(String tripId);
 
     TripSchedule findByTripId(String tipID);
 

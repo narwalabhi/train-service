@@ -29,6 +29,7 @@ public class TrainsController {
     @PutMapping("/update/{trainId}")
     public ResponseEntity<Train> updateTrain(@PathVariable String trainId, @RequestBody Train train){
         Optional<Train> trainData = trainsService.updateTrain(trainId, train);
+        System.out.println(train + " " +  trainData);
         if (trainData.isPresent()){
             return ResponseEntity.ok(trainData.get());
         }else throw new EntityNotFoundException("Train with id " + trainId + " was not found.");

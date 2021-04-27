@@ -63,8 +63,9 @@ public class TripsController {
 
     //TODO change Return type
     @GetMapping("/get")
-    public List<Trip> getAllTrips(){
-        return tripsService.getAllTrips();
+    public ResponseEntity<List<Trip>> getAllTrips(){
+        List<Trip> allTrips = tripsService.getAllTrips();
+        return ResponseEntity.ok(allTrips);
     }
 
 

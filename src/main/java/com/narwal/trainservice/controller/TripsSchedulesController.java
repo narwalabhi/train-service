@@ -137,9 +137,17 @@ public class TripsSchedulesController {
                     }
                 }
             }
+            System.out.println( "Existing " + existingTripSchedules);
             return ResponseEntity.ok(existingTripSchedules);
         }
         throw new EntityNotFoundException("No trips available!");
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<TripSchedule>> getAll(){
+        List<TripSchedule> tripSchedules = tripSchedulesService.getAll();
+        return ResponseEntity.ok(tripSchedules);
+    }
+
 
 }

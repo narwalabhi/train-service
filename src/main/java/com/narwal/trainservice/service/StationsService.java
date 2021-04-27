@@ -5,6 +5,7 @@ import com.narwal.trainservice.repository.StationsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,5 +44,10 @@ public class StationsService {
         Optional<Station> station = stationsRepo.findByCode(stationCode);
         return station;
     }
+
+    public Optional<List<Station>> getAll() {
+        return Optional.ofNullable(stationsRepo.findAll());
+    }
+
 
 }

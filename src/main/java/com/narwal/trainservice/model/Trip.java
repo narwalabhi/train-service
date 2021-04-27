@@ -21,6 +21,8 @@ public class Trip {
     private int durationHrs;
     private int durationMns;
     private String sourceStationCode;
+    private String destinationStationCode;
+    private String trainNo;
 
     @Override
     public String toString() {
@@ -35,6 +37,4 @@ public class Trip {
                 '}';
     }
 
-    private String destinationStationCode;
-    private String trainNo;
 }

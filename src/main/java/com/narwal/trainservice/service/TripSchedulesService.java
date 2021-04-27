@@ -40,7 +40,8 @@ public class TripSchedulesService {
     public Optional<TripSchedule> deleteTripSchedule(String tripScheduleId){
         Optional<TripSchedule> tripSchedule = tripSchedulesRepo.findById(tripScheduleId);
         if (tripSchedule.isPresent()){
-            tripSchedulesRepo.deleteByTripId(tripScheduleId);
+            tripSchedulesRepo.deleteById(tripSchedule.get().getId());
+            System.out.println(tripSchedule.get());
             return tripSchedule;
         }
         return Optional.empty();
@@ -65,4 +66,7 @@ public class TripSchedulesService {
         return Optional.ofNullable(tripScheduleByTripIdAndTripDate);
     }
 
+    public List<TripSchedule> getAll() {
+        return tripSchedulesRepo.findAll();
+    }
 }
