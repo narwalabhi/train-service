@@ -131,6 +131,7 @@ public class TripsSchedulesController {
                                 train.getChairCarSeats(),
                                 train.getSleeperSeats(),
                                 trip.getTripId(),
+                                train.getNumber(),
                                 activeCode);
                         Optional<TripSchedule> tripScheduleData = tripSchedulesService.createTripSchedule(newTripSchedule);
                         tripScheduleData.ifPresent(existingTripSchedules::add);

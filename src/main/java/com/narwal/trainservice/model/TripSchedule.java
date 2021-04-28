@@ -28,10 +28,11 @@ public class TripSchedule {
     private int chairCarAcAvailableSeats;
     private int SleeperAvailableSeats;
     private String tripId;
+    private String trainNo;
     private String status;
 
 
-    public TripSchedule(LocalDate tripDate, int firstAcAvailableSeats, int secondAcAvailableSeats, int thirdAcAvailableSeats, int firstClassAcAvailableSeats, int chairCarAcAvailableSeats, int sleeperAvailableSeats, String tripId, String status) {
+    public TripSchedule(LocalDate tripDate, int firstAcAvailableSeats, int secondAcAvailableSeats, int thirdAcAvailableSeats, int firstClassAcAvailableSeats, int chairCarAcAvailableSeats, int sleeperAvailableSeats, String tripId, String trainNo , String status) {
         this.tripDate = tripDate;
         this.firstAcAvailableSeats = firstAcAvailableSeats;
         this.secondAcAvailableSeats = secondAcAvailableSeats;
@@ -40,6 +41,7 @@ public class TripSchedule {
         this.chairCarAcAvailableSeats = chairCarAcAvailableSeats;
         SleeperAvailableSeats = sleeperAvailableSeats;
         this.tripId = tripId;
+        this.trainNo = trainNo;
         this.status = status;
     }
 }
