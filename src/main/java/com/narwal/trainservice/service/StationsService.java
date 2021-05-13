@@ -49,5 +49,8 @@ public class StationsService {
         return Optional.ofNullable(stationsRepo.findAll());
     }
 
+    public List<Station> search(String term){
+        return stationsRepo.findByNameLike(term);
+    }
 
 }

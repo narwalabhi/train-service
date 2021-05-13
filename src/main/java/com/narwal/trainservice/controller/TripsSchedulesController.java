@@ -122,6 +122,7 @@ public class TripsSchedulesController {
                     Optional<Train> trainData = trainsService.getTrainByNumber(trip.getTrainNo());
                     if (trainData.isPresent()){
                         Train train = trainData.get();
+                        System.out.println("TRain " + train);
                         TripSchedule newTripSchedule = new TripSchedule(
                                 date,
                                 train.getFirstAcSeats(),

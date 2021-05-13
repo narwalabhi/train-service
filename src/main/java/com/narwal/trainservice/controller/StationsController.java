@@ -59,4 +59,10 @@ public class StationsController {
             return ResponseEntity.ok(trains.get());
         } else throw new EntityNotFoundException("Stations not found.");
     }
+
+    @GetMapping("/search/{term}")
+    public ResponseEntity<List<Station>> search(@PathVariable String term){
+        return ResponseEntity.ok(stationsService.search(term));
+    }
+
 }
